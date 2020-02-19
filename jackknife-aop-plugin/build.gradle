@@ -1,3 +1,5 @@
+//提供aop插件的源码，可编译aop的插件
+
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
@@ -9,12 +11,20 @@ dependencies {
 }
 
 uploadArchives {
+    //本地依赖方式
     repositories.mavenDeployer {
         repository(url: uri('build/plugins'))
         pom.groupId = 'com.lwh.jackknife.plugin'
         pom.artifactId = 'jackknife-aop-plugin'
         pom.version = '1.0'
     }
+    //上传Nexus私服，私服url和用户名密码认证信息请自行修改
+//    repositories.mavenDeployer {
+//        repository(url: "Nexus私服地址")
+//        pom.groupId = 'com.lwh.jackknife.plugin'
+//        pom.artifactId = 'jackknife-aop-plugin'
+//        pom.version = '1.0'
+//    }
 }
 
 repositories {
@@ -22,3 +32,4 @@ repositories {
 }
 
 //注意⚠️:   插件修改后运行前需要重新发布: ./gradlew -p jackknife-aop-plugin clean build uploadArchives --info
+//请保证JAVA_HOME和Android Studio的jdk版本一致，以保证编译出来的字节码版本一致

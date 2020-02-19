@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'android-aspectjx'
+//以下代码，如果使用本地方式，需要插件生成成功后使用，避免循环依赖哦
 apply plugin: 'com.lwh.jackknife.aop'
 
 android {
@@ -11,9 +16,15 @@ android {
         versionName "1.0"
         javaCompileOptions {
             annotationProcessorOptions {
-                includeCompileClasspath = true  //高版本gradle需要
+                includeCompileClasspath = true
             }
         }
+    }
+    //kotlin需要配这个
+    aspectjx {
+        exclude 'org.jetbrains.kotlin'
+        exclude 'org.jetbrains.kotlinx'
+        exclude 'com.android.support'
     }
     buildTypes {
         release {
@@ -29,8 +40,14 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     implementation 'org.aspectj:aspectjrt:1.8.10'
-    implementation 'com.android.support:support-v4:28.0.0'
+    //基于XPermission的权限申请基础API
+    implementation 'com.github.JackWHLiu.jackknife:jackknife-xpermission:4.6.7'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

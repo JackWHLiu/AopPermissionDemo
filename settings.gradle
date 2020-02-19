@@ -1,1 +1,2 @@
-include ':app', 'jackknife-aop-plugin'
+include ':app'
+//, 'jackknife-aop-plugin'
